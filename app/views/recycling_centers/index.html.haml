@@ -1,0 +1,24 @@
+.page-header
+  %h1 Genbrugsstationer
+
+%p= link_to 'Ny genbrugsstation', new_recycling_center_path, class: 'btn btn-primary'
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th Navn
+      %th Adresse
+      %th Kategori
+      %th Faktioner
+      %th
+      %th
+
+  %tbody
+    - @recycling_centers.each do |recycling_center|
+      %tr
+        %td= recycling_center.name
+        %td= recycling_center.address
+        %td= recycling_center.category
+        %td= recycling_center.factions.join(', ')
+        %td= link_to t('helpers.edit'), edit_recycling_center_path(recycling_center), class: 'btn btn-xs btn-primary'
+        %td= link_to t('helpers.destroy'), recycling_center, method: :delete, data: { confirm: t('helpers.are_you_sure') }, class: 'btn btn-xs btn-danger'

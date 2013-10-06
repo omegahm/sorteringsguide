@@ -1,0 +1,14 @@
+/*
+ *= require_self
+ *= require_tree .
+ */
+
+$font-size-base: 14px;
+$font-family-sans-serif: Verdana, sans-serif;
+
+@import "bootstrap";
+
+// Rails class for field with errors
+.field_with_errors {
+  @extend .has-error;
+}

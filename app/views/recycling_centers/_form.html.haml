@@ -1,0 +1,51 @@
+.page-header
+  %h1= title
+
+= form_for @recycling_center, html: { class: 'form-horizontal', role: 'form' } do |f|
+  - if @recycling_center.errors.any?
+    .panel.panel-danger
+      .panel-heading= t('errors.template.header', count: @recycling_center.errors.count, model: t("activerecord.models.#{@recycling_center.class.to_s.downcase}").downcase)
+      .panel-body
+        = t('errors.template.body')
+
+        %ul
+          - @recycling_center.errors.full_messages.each do |msg|
+            %li= msg
+
+  .form-group
+    = f.label :name, class: 'col-lg-2 control-label'
+    .col-lg-10
+      = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :address, class: 'col-lg-2 control-label'
+    .col-lg-10
+      = f.text_field :address, class: 'form-control'
+
+  .form-group
+    = f.label :category, class: 'col-lg-2 control-label'
+    .col-lg-10
+      = f.select :category, Sign::SIGN_CATEGORIES
+
+  .form-group
+    = f.label :factions, class: 'col-lg-2 control-label'
+    .col-lg-10
+      - get_all_factions.in_groups_of(10, false) do |fac_group|
+        - fac_group.each do |fac|
+          %label.checkbox-inline
+            = check_box_tag "factions[#{fac}]", fac, @recycling_center.factions.present? && @recycling_center.factions.include?(fac), :name => "recycling_center[factions][]"
+            = fac
+        %br
+
+  .form-group
+    .col-lg-10.col-lg-offset-2
+      = f.submit class: 'btn btn-primary btn-xs'
+      = link_to t('helpers.back'), recycling_centers_path
+
+  - active = true
+  = radio_button_tag "active_1", true, active
+  = radio_button_tag "active_1", false, !active
+
+  - active = false
+  = radio_button_tag "active_2", true, active
+  = radio_button_tag "active_2", false, !active

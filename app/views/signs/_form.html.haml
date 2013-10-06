@@ -1,0 +1,48 @@
+.page-header
+  %h1= title
+
+= form_for @sign, html: { class: 'form-horizontal', role: 'form' } do |f|
+  - if @sign.errors.any?
+    .panel.panel-danger
+      .panel-heading= t('errors.template.header', count: @sign.errors.count, model: t("activerecord.models.#{@sign.class.to_s.downcase}").downcase)
+      .panel-body
+        = t('errors.template.body')
+
+        %ul
+          - @sign.errors.full_messages.each do |msg|
+            %li= msg
+
+  .form-group
+    = f.label :name, class: 'col-lg-2 control-label'
+    .col-lg-10
+      = f.text_field :name, class: 'form-control'
+
+  .form-group
+    = f.label :faction_number, class: 'col-lg-2 control-label'
+    .col-lg-10
+      = f.text_field :faction_number, class: 'form-control'
+
+  .form-group
+    = f.label :search_terms, class: 'col-lg-2 control-label'
+    .col-lg-10
+      = f.text_area :search_terms, class: 'form-control'
+
+  .form-group
+    = f.label :comment, class: 'col-lg-2 control-label'
+    .col-lg-10
+      = f.text_area :comment, class: 'form-control'
+
+  .form-group
+    = f.label :category, class: 'col-lg-2 control-label'
+    .col-lg-10
+      = f.select :category, Sign::SIGN_CATEGORIES
+
+  .form-group
+    = f.label :image, class: 'col-lg-2 control-label'
+    .col-lg-10
+      = f.file_field :image, class: 'form-control'
+
+  .form-group
+    .col-lg-10.col-lg-offset-2
+      = f.submit class: 'btn btn-primary btn-xs'
+      = link_to t('helpers.back'), signs_path

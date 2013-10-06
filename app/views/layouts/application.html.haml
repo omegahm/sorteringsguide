@@ -1,0 +1,20 @@
+!!! 5
+%html
+  %head
+    %title Sorteringsguide
+    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
+    = csrf_meta_tags
+  %body
+    = yield :before_main
+
+    .container
+      - if notice.present?
+        %p
+          .alert.alert-info= notice
+      - if alert.present?
+        %p
+          .alert.alert-danger= alert
+
+      = yield
+
+    = javascript_include_tag "application", "data-turbolinks-track" => true

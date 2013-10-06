@@ -1,0 +1,17 @@
+common: &COMMON
+  adapter: postgresql
+  encoding: utf-8
+  pool: 5
+  username: sorteringsguide
+
+production:
+  <<: *COMMON
+
+development:
+  <<: *COMMON
+  database: sorteringsguide_development
+
+test:
+  <<: *COMMON
+  database: sorteringsguide_test
+  username: postgres

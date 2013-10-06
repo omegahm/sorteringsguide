@@ -1,0 +1,26 @@
+.page-header
+  %h1 Skilte
+
+%p= link_to 'Nyt skilt', new_sign_path, class: 'btn btn-primary'
+
+%table.table.table-striped.table-bordered.table-hover
+  %thead
+    %tr
+      %th Navn
+      %th Faktionsnummer
+      %th Søgeord
+      %th Kommentar
+      %th Kategori
+      %th
+      %th
+
+  %tbody
+    - @signs.each do |sign|
+      %tr
+        %td= sign.name
+        %td= sign.faction_number
+        %td= sign.search_terms
+        %td= sign.comment
+        %td= sign.category
+        %td= link_to t('helpers.edit'), edit_sign_path(sign), class: 'btn btn-xs btn-primary'
+        %td= link_to t('helpers.destroy'), sign, method: :delete, data: { confirm: t('helpers.are_you_sure') }, class: 'btn btn-xs btn-danger'
