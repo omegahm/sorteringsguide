@@ -1,5 +1,5 @@
 class Sign < ActiveRecord::Base
-  SIGN_CATEGORIES = ["Blå", "Grå"]
+  SIGN_CATEGORIES = ["Blå", "Grå", "Farvede"]
 
   has_attached_file :image,
                     :styles => {
@@ -8,11 +8,7 @@ class Sign < ActiveRecord::Base
                     },
                     :default_url => "/images/:style/missing.png"
 
-  validates_presence_of :name,
-                        :faction_number,
-                        :search_terms,
-                        :category,
-                        :image
+  validates_presence_of :name, :faction_number, :search_terms, :category, :image
 
-
+  scope :for_factions, ->(faction_numbers, category) { where(faction_number: faction_numbers, category: category) }
 end

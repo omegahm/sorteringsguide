@@ -5,12 +5,24 @@
     = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
     = csrf_meta_tags
   %body
+    - if current_admin.present?
+      %nav.navbar.navbar-inverse(role="navigation")
+        %ul.nav.navbar-nav.navbar-left
+          %li= link_to "Hjem", root_path
+
+        %ul.nav.navbar-nav.navbar-right
+          %li= link_to 'Skilte', signs_path
+          %li= link_to 'Genbrugsstationer', recycling_centers_path
+          %li= link_to 'Log ud', destroy_admin_session_path, method: :delete
+
     = yield :before_main
 
     .container
+
       - if notice.present?
         %p
           .alert.alert-info= notice
+
       - if alert.present?
         %p
           .alert.alert-danger= alert
@@ -18,3 +30,4 @@
       = yield
 
     = javascript_include_tag "application", "data-turbolinks-track" => true
+    = yield :scripts

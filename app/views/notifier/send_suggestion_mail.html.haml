@@ -1,0 +1,19 @@
+%h3
+  Hej&nbsp
+  = @admin.email
+  ,
+
+%p Følgende er blevet indtastet i formularen på Sorteringsguide.dk
+
+%p
+  Navn:&nbsp;
+  = @params['name']
+
+%p
+  E-mail:&nbsp;
+  = @params['email']
+
+%p
+  Forslag:&nbsp;
+  = @params['suggestion'].first
+

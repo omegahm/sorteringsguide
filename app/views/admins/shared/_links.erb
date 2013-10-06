@@ -1,0 +1,7 @@
+<%- if controller_name != 'sessions' %>
+  <%= link_to "Log ind", new_session_path(resource_name) %>
+<% end -%>
+
+<%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+  <%= link_to "Glemt dit kodeord?", new_password_path(resource_name) %>
+<% end -%>

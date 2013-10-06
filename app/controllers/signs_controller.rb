@@ -1,9 +1,11 @@
 class SignsController < ApplicationController
   before_action :set_sign, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_admin!
 
   # GET /signs
   def index
     @signs = Sign.order(:name)
+    @show_signs = params[:show_signs]
   end
 
   # GET /signs/1

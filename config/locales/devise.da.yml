@@ -8,7 +8,14 @@ da:
       not_saved:
         one: "1 fejl medførte at denne %{resource} ikke kunne gemmes:"
         other: "%{count} fejl medførte at denne %{resource} ikke kunne gemmes:"
-
+  activerecord:
+    models:
+      admin: 'Admin'
+    attributes:
+      admin:
+        email: 'Email'
+        password: 'Kodeord'
+        remember_me: 'Husk mig'
   devise:
     failure:
       already_authenticated: 'Du er allerede logget ind.'
@@ -17,6 +24,7 @@ da:
       locked: 'Din konto er låst i de næste to timer.'
       invalid: 'Email eller kodeord er ikke gyldig.'
       invalid_token: 'Ugyldig token til autorisering.'
+      not_found_in_database: "Ugyldig email eller kodeord."
       timeout: 'Din session er udløbet. Log ind igen for at kunne fortsætte.'
       inactive: 'Din konto er ikke bekræftet.'
     sessions:

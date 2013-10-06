@@ -1,0 +1,90 @@
+%h2= @recycling_center.name
+
+%p
+  .input-group.input-group-lg
+    %input#search-faction.input-lg.form-control(placeholder="Indtast søgeord..." data-bind="event: { keyup: search }")
+    %span.input-group-addon
+      %i.glyphicon.glyphicon-question-sign(data-toggle="popover" data-trigger="hover" data-container="body" data-placement="bottom" data-content="Klik her og udfyld formularen for at sende forslag til Vestforbrænding." data-title="Mangler der noget?")
+
+%table.table.table-bordered.table-hover(data-bind="visible: searchedSigns().length > 0")
+  %thead
+    %tr
+      %th
+      %th Faktion
+      %th Navn
+      %th Kommentar
+  %tbody(data-bind="foreach: searchedSigns")
+    %tr
+      %td
+        /%img(data-bind="attr: { src: image_url }")
+      %td(data-bind="text: faction_number")
+      %td(data-bind="text: name")
+      %td(data-bind="text: comment")
+
+#send-suggestion-mail-modal.modal.fade
+  .modal-dialog
+    .modal-content
+      .modal-header Mangler der noget?
+      .modal-body
+        = form_tag send_suggestion_mail_url, method: :put, class: 'form-horizontal', role: 'form', remote: true do
+          .form-group
+            = label_tag :name, "Navn", class: 'col-lg-2 control-label'
+            .col-lg-10
+              = text_field_tag :name, params[:name], class: 'form-control'
+
+          .form-group
+            = label_tag :email, "E-mail", class: 'col-lg-2 control-label'
+            .col-lg-10
+              = text_field_tag :email, params[:email], class: 'form-control'
+
+          .form-group
+            = label_tag :suggestion, "Forslag", class: 'col-lg-2 control-label'
+            .col-lg-10
+              = text_area :suggestion, params[:suggestion], class: 'form-control'
+
+          .form-group
+            .col-lg-10.col-lg-offset-2
+              = submit_tag "Send", class: 'btn btn-primary btn-xs', onclick: '$(".modal").modal("hide")'
+
+- content_for :scripts do
+  :javascript
+    $("i[data-toggle*='popover']").popover();
+    $("i[data-toggle*='popover']").click(function() {
+      $("#send-suggestion-mail-modal").modal("show");
+    });
+
+    var Sign = function(name, faction_number, search_terms, comment, image_url) {
+      var self = this;
+      self.name = name;
+      self.faction_number = faction_number;
+      self.search_terms = search_terms;
+      self.comment = comment;
+      self.image_url = image_url;
+    }
+
+    function AppViewModel() {
+      var self = this;
+
+      self.search = function() {
+        var value = $('input#search-faction').val();
+        self.searchedSigns([]);
+
+        if (value != "") {
+          $.each(self.signs(), function(index, elem) {
+            if (elem.search_terms.match(value)) {
+              self.searchedSigns.push(elem);
+            }
+          });
+        }
+      }
+
+      self.signs = ko.observableArray([
+        #{
+          @signs.map { |sign| "new Sign('#{sign.name}', '#{sign.faction_number}', '#{sign.search_terms}', '#{sign.comment}', '#{sign.image.url}')" }.join(",\n")
+        }
+      ]);
+
+      self.searchedSigns = ko.observableArray();
+    }
+
+    ko.applyBindings(new AppViewModel());

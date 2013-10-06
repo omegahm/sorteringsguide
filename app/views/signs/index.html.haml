@@ -1,11 +1,15 @@
 .page-header
   %h1 Skilte
 
-%p= link_to 'Nyt skilt', new_sign_path, class: 'btn btn-primary'
+%p
+  = link_to 'Nyt skilt', new_sign_path, class: 'btn btn-primary'
+  = link_to 'Vis alle skilte', signs_path(show_signs: true), class: 'btn btn-primary'
 
 %table.table.table-striped.table-bordered.table-hover
   %thead
     %tr
+      - if @show_signs
+        %th
       %th Navn
       %th Faktionsnummer
       %th Søgeord
@@ -17,6 +21,8 @@
   %tbody
     - @signs.each do |sign|
       %tr
+        - if @show_signs
+          %td= image_tag sign.image
         %td= sign.name
         %td= sign.faction_number
         %td= sign.search_terms

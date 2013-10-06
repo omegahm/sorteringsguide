@@ -1,5 +1,6 @@
 class RecyclingCentersController < ApplicationController
   before_action :set_recycling_center, only: [:show, :edit, :update, :destroy]
+  before_filter :authenticate_admin!
 
   # GET /recycling_centers
   def index
@@ -8,6 +9,8 @@ class RecyclingCentersController < ApplicationController
 
   # GET /recycling_centers/1
   def show
+    @factions = @recycling_center.factions
+    @signs = Sign.for_factions(@factions, @recycling_center.category)
   end
 
   # GET /recycling_centers/new
@@ -53,7 +56,6 @@ class RecyclingCentersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def recycling_center_params
-      raise params.inspect
       params.require(:recycling_center).permit(:name, :address, :latitude, :longitude, :category, { :factions => [] })
     end
 end
