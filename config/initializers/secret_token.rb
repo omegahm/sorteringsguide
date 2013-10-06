@@ -9,4 +9,4 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Sorteringsguide::Application.config.secret_key_base = 'eb5f26aca28978abe0692e08a1a0e5c6d9c6b40ea23499d04e8a1a1810d11b06efe6ef7fa9e869b3b2c29e4ace127be55ca39e2f78e01a7836fc22a6a1bad64d'
+Sorteringsguide::Application.config.secret_key_base = ENV['SECRET_TOKEN'] || 'eb5f26aca28978abe0692e08a1a0e5c6d9c6b40ea23499d04e8a1a1810d11b06efe6ef7fa9e869b3b2c29e4ace127be55ca39e2f78e01a7836fc22a6a1bad64d'
