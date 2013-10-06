@@ -1,6 +1,6 @@
 class RecyclingCentersController < ApplicationController
   before_action :set_recycling_center, only: [:show, :edit, :update, :destroy]
-  before_filter :authenticate_admin!
+  before_filter :authenticate_admin!, except: [:show]
 
   # GET /recycling_centers
   def index
