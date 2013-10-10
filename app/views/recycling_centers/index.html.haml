@@ -10,6 +10,7 @@
       %th Adresse
       %th Kategori
       %th Faktioner
+      %th Latitude/Longitude
       %th
       %th
 
@@ -20,5 +21,9 @@
         %td= recycling_center.address
         %td= recycling_center.category
         %td= recycling_center.factions.join(', ') if recycling_center.factions.present?
+        %td
+          =recycling_center.lat
+          \/
+          =recycling_center.lng
         %td= link_to t('helpers.edit'), edit_recycling_center_path(recycling_center), class: 'btn btn-xs btn-primary'
         %td= link_to t('helpers.destroy'), recycling_center, method: :delete, data: { confirm: t('helpers.are_you_sure') }, class: 'btn btn-xs btn-danger'

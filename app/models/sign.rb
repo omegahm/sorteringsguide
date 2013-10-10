@@ -8,7 +8,7 @@ class Sign < ActiveRecord::Base
                     },
                     default_url: "/images/:style/missing.png"
 
-  validates_presence_of :name, :faction_number, :search_terms, :category
+  validates_presence_of :name, :category
 
   scope :for_factions, ->(faction_numbers, category) { where(faction_number: faction_numbers, category: category) }
 end

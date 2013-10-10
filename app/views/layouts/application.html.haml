@@ -2,8 +2,10 @@
 %html
   %head
     %title Sorteringsguide
-    = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
+    = stylesheet_link_tag "application", media: "all"
     = csrf_meta_tags
+    %meta{charset: "utf-8"}
+    %meta{name: "viewport", content: "initial-scale=1.0, user-scalable=no"}
   %body
     - if current_admin.present?
       %nav.navbar.navbar-inverse(role="navigation")
@@ -18,7 +20,6 @@
     = yield :before_main
 
     .container
-
       - if notice.present?
         %p
           .alert.alert-info= notice
@@ -29,5 +30,6 @@
 
       = yield
 
-    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = yield :additional_scripts
+    = javascript_include_tag "application"
     = yield :scripts

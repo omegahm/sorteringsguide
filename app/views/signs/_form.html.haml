@@ -42,6 +42,8 @@
     .col-lg-10
       = f.file_field :image, class: 'form-control'
 
+      %p{style: 'padding-top: 10px'}= image_tag f.object.image.url if f.object.image.present?
+
   .form-group
     .col-lg-10.col-lg-offset-2
       = f.submit class: 'btn btn-primary btn-xs'

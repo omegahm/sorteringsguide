@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-    @recycling_centers = RecyclingCenter.all
+    @recycling_centers = RecyclingCenter.order(:name)
   end
 
   def send_suggestion_mail

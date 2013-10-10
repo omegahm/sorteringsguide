@@ -1,10 +1,11 @@
+%p
+  %small
+    = link_to "Tilbage", root_path
+
 %h2= @recycling_center.name
 
 %p
-  .input-group.input-group-lg
-    %input#search-faction.input-lg.form-control(placeholder="Indtast søgeord..." data-bind="event: { keyup: search }")
-    %span.input-group-addon
-      %i.glyphicon.glyphicon-question-sign(data-toggle="popover" data-trigger="hover" data-container="body" data-placement="bottom" data-content="Klik her og udfyld formularen for at sende forslag til Vestforbrænding." data-title="Mangler der noget?")
+  %input#search-faction.input-lg.form-control(placeholder="Indtast søgeord..." data-bind="event: { keyup: search }")
 
 %table.table.table-bordered.table-hover(data-bind="visible: searchedSigns().length > 0")
   %thead
@@ -16,41 +17,54 @@
   %tbody(data-bind="foreach: searchedSigns")
     %tr
       %td
-        /%img(data-bind="attr: { src: image_url }")
+        %img(data-bind="attr: { src: image_url }")
       %td(data-bind="text: faction_number")
       %td(data-bind="text: name")
       %td(data-bind="text: comment")
 
-#send-suggestion-mail-modal.modal.fade
-  .modal-dialog
-    .modal-content
-      .modal-header Mangler der noget?
-      .modal-body
-        = form_tag send_suggestion_mail_url, method: :put, class: 'form-horizontal', role: 'form', remote: true do
-          .form-group
-            = label_tag :name, "Navn", class: 'col-lg-2 control-label'
-            .col-lg-10
-              = text_field_tag :name, params[:name], class: 'form-control'
+%p.pull-right
+  %i.glyphicon.glyphicon-question-sign(data-toggle="popover" data-trigger="hover" data-container="body" data-placement="left" data-content="Klik her og udfyld formularen for at sende forslag til Vestforbrænding." data-title="Mangler der noget?")
 
-          .form-group
-            = label_tag :email, "E-mail", class: 'col-lg-2 control-label'
-            .col-lg-10
-              = text_field_tag :email, params[:email], class: 'form-control'
+.clearfix
 
-          .form-group
-            = label_tag :suggestion, "Forslag", class: 'col-lg-2 control-label'
-            .col-lg-10
-              = text_area :suggestion, params[:suggestion], class: 'form-control'
+#send-suggestion-mail-collapse.collapse
+  .panel.panel-default
+    .panel-heading
+      %h3.panel-title Mangler der noget?
 
-          .form-group
-            .col-lg-10.col-lg-offset-2
-              = submit_tag "Send", class: 'btn btn-primary btn-xs', onclick: '$(".modal").modal("hide")'
+    .panel-body
+      = form_tag send_suggestion_mail_url, method: :put, class: 'form-horizontal', role: 'form', remote: true do
+        .form-group
+          = label_tag :name, "Navn", class: 'col-lg-2 control-label'
+          .col-lg-10
+            = text_field_tag :name, params[:name], class: 'form-control'
+
+        .form-group
+          = label_tag :email, "E-mail", class: 'col-lg-2 control-label'
+          .col-lg-10
+            = text_field_tag :email, params[:email], class: 'form-control'
+
+        .form-group
+          = label_tag :suggestion, "Forslag", class: 'col-lg-2 control-label'
+          .col-lg-10
+            = text_area :suggestion, params[:suggestion], class: 'form-control'
+
+        .form-group
+          .col-lg-10.col-lg-offset-2
+            = submit_tag "Send", class: 'btn btn-primary btn-xs', onclick: '$("#send-suggestion-mail-collapse").collapse("hide")'
 
 - content_for :scripts do
   :javascript
+    var collapsed = true;
     $("i[data-toggle*='popover']").popover();
     $("i[data-toggle*='popover']").click(function() {
-      $("#send-suggestion-mail-modal").modal("show");
+      if(collapsed) {
+        $("#send-suggestion-mail-collapse").collapse("show");
+        collapsed = !collapsed;
+      } else {
+        $("#send-suggestion-mail-collapse").collapse("hide");
+        collapsed = !collapsed;
+      }
     });
 
     var Sign = function(name, faction_number, search_terms, comment, image_url) {
@@ -80,7 +94,7 @@
 
       self.signs = ko.observableArray([
         #{
-          @signs.map { |sign| "new Sign('#{sign.name}', '#{sign.faction_number}', '#{sign.search_terms}', '#{sign.comment}', '#{sign.image.url}')" }.join(",\n")
+          @signs.map { |sign| "new Sign('#{sign.name}', '#{sign.faction_number}', '#{sign.search_terms}', '#{sign.comment}', '#{sign.image.url(:medium)}')" }.join(",\n")
         }
       ]);
 
