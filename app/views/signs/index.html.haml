@@ -22,7 +22,7 @@
     - @signs.each do |sign|
       %tr
         - if @show_signs
-          %td= image_tag sign.image
+          %td= image_tag sign.image(:thumb)
         %td= sign.name
         %td= sign.faction_number
         %td= sign.search_terms
