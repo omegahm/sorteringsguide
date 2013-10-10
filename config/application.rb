@@ -25,5 +25,9 @@ module Sorteringsguide
     # Precompile additional assets
     config.assets.precompile += %w( *.svg *.eot *.woff *.ttf )
     config.assets.precompile += %w( *.png *.jpg *.jpeg *.gif )
+
+    config.action_dispatch.default_headers = {
+      'X-Frame-Options' => 'ALLOWALL'
+    }
   end
 end
