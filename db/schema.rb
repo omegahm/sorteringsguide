@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131010181211) do
+ActiveRecord::Schema.define(version: 20131010204219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,12 @@ ActiveRecord::Schema.define(version: 20131010181211) do
     t.datetime "updated_at"
   end
 
+  add_index "recycling_centers", ["category"], name: "index_recycling_centers_on_category", using: :btree
+  add_index "recycling_centers", ["factions"], name: "index_recycling_centers_on_factions", using: :btree
+  add_index "recycling_centers", ["lat"], name: "index_recycling_centers_on_lat", using: :btree
+  add_index "recycling_centers", ["lng"], name: "index_recycling_centers_on_lng", using: :btree
+  add_index "recycling_centers", ["name"], name: "index_recycling_centers_on_name", using: :btree
+
   create_table "signs", force: true do |t|
     t.string   "name"
     t.string   "faction_number"
@@ -59,5 +65,9 @@ ActiveRecord::Schema.define(version: 20131010181211) do
     t.integer  "image_file_size"
     t.datetime "image_updated_at"
   end
+
+  add_index "signs", ["category"], name: "index_signs_on_category", using: :btree
+  add_index "signs", ["faction_number"], name: "index_signs_on_faction_number", using: :btree
+  add_index "signs", ["name"], name: "index_signs_on_name", using: :btree
 
 end
