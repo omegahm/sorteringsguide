@@ -1,11 +1,17 @@
-class Admin < ActiveRecord::Base
-  if Rails.env.production?
-    devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
-  else
-    devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :registerable
-  end
+require 'spec_helper'
 
-  scope :wants_mail, ->{ where("mails = 't'") }
+describe Admin do
+  context 'scopes' do
+    describe ':wants_mail' do
+      it 'finds people who want mail' do
+        admin1 = FactoryGirl.create(:admin)
+        admin2 = FactoryGirl.create(:admin, mails: false)
+
+        Admin.wants_mail.should include(admin1)
+        Admin.wants_mail.should_not include(admin2)
+      end
+    end
+  end
 end
 
 # == Schema Information

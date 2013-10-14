@@ -1,15 +1,17 @@
-class Sign < ActiveRecord::Base
-  SIGN_CATEGORIES = ["Blå", "Grå", "Farvede"]
+require 'spec_helper'
 
-  has_attached_file :image,
-                    styles: {
-                      medium: "300x300>",
-                      thumb: "100x100>"
-                    }
+describe Sign do
+  context "scopes" do
+    describe ":for_factions" do
+      it 'gets correct factions' do
+        @valid_sign = FactoryGirl.create(:sign)
+        @invalid_sign1 = FactoryGirl.create(:sign)
+        @invalid_sign2 = FactoryGirl.create(:sign, faction_number: @valid_sign.faction_number, category: Sign::SIGN_CATEGORIES.last)
 
-  validates_presence_of :name, :category
-
-  scope :for_factions, ->(faction_numbers, category) { where(faction_number: faction_numbers, category: category) }
+        Sign.for_factions(@valid_sign.faction_number, @valid_sign.category)
+      end
+    end
+  end
 end
 
 # == Schema Information

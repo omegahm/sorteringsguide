@@ -250,6 +250,8 @@ GEM
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
     sexp_processor (4.3.0)
+    shoulda-matchers (2.4.0)
+      activesupport (>= 3.0.0)
     sinatra (1.4.3)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -340,6 +342,7 @@ DEPENDENCIES
   rails_12factor
   rspec-rails
   sass-rails
+  shoulda-matchers
   uglifier
   unicorn-rails
   yui-compressor

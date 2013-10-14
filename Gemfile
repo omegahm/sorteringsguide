@@ -48,7 +48,8 @@ end
 group :test do
   gem 'capybara'
   gem 'capybara-webkit'
-  gem 'factory_girl_rails', require: false
+  gem 'factory_girl_rails'
   gem 'fuubar'
   gem 'rspec-rails'
+  gem 'shoulda-matchers'
 end

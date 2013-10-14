@@ -10,3 +10,19 @@ class RecyclingCenter < ActiveRecord::Base
     self.lng = location.lng
   end
 end
+
+# == Schema Information
+#
+# Table name: recycling_centers
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  address    :string(255)
+#  lat        :float
+#  lng        :float
+#  category   :string(255)
+#  factions   :text
+#  created_at :datetime
+#  updated_at :datetime
+#
+
