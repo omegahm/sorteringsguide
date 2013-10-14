@@ -29,7 +29,9 @@
 
   .form-group
     = f.label :factions, class: 'col-lg-2 control-label'
-    .col-lg-10
+    .col-lg-1
+      %span.btn.btn-success.btn-xs{onclick: '$("input[type=\'checkbox\']").attr("checked", "checked");'} Vælg alle
+    .col-lg-9
       - get_all_factions.in_groups_of(10, false) do |fac_group|
         - fac_group.each do |fac|
           %label.checkbox-inline

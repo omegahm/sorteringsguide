@@ -5,8 +5,7 @@ class Sign < ActiveRecord::Base
                     styles: {
                       medium: "300x300>",
                       thumb: "100x100>"
-                    },
-                    default_url: "/images/:style/missing.png"
+                    }
 
   validates_presence_of :name, :category
 

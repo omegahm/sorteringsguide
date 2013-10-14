@@ -1,104 +1,107 @@
-%p
-  %small
-    = link_to "Tilbage", root_path
+- cache "v_signs_#{@last_sign_updated}" do
+  %p
+    %small
+      = link_to "Tilbage", root_path
 
-%h2= @recycling_center.name
+  %h2= @recycling_center.name
 
-%p
-  %input#search-faction.input-lg.form-control(placeholder="Indtast søgeord..." data-bind="event: { keyup: search }")
+  %p
+    %input#search-faction.input-lg.form-control(placeholder="Indtast søgeord..." data-bind="event: { keyup: search }")
 
-%table.table.table-bordered.table-hover(data-bind="visible: searchedSigns().length > 0")
-  %thead
-    %tr
-      %th
-      %th Faktion
-      %th Navn
-      %th Kommentar
-  %tbody(data-bind="foreach: searchedSigns")
-    %tr
-      %td
-        %img(data-bind="attr: { src: image_url }")
-      %td(data-bind="text: faction_number")
-      %td(data-bind="text: name")
-      %td(data-bind="text: comment")
+  %table.table.table-bordered.table-hover.table-striped(data-bind="visible: searchedSigns().length > 0")
+    %thead
+      %tr
+        %th
+        %th Faktion
+        %th Navn
+        %th Kommentar
+    %tbody(data-bind="foreach: searchedSigns")
+      %tr
+        %td(data-bind="if: !(image_url == '' || image_url == '/images/medium/missing.png')")
+          %img(data-bind="attr: { src: image_url }")
+        %td(data-bind="text: faction_number")
+        %td(data-bind="text: name")
+        %td(data-bind="text: comment")
 
-%p.pull-right
-  %i.glyphicon.glyphicon-question-sign(data-toggle="popover" data-trigger="hover" data-container="body" data-placement="left" data-content="Klik her og udfyld formularen for at sende forslag til Vestforbrænding." data-title="Mangler der noget?")
+  %p.pull-right
+    %i.glyphicon.glyphicon-question-sign(style="cursor: pointer;" data-toggle="popover" data-trigger="hover" data-container="body" data-placement="left" data-content="Klik her og udfyld formularen for at sende forslag til Vestforbrænding." data-title="Mangler der noget?")
 
-.clearfix
+  .clearfix
 
-#send-suggestion-mail-collapse.collapse
-  .panel.panel-default
-    .panel-heading
-      %h3.panel-title Mangler der noget?
+  #send-suggestion-mail-collapse.collapse
+    .panel.panel-default
+      .panel-heading
+        %h3.panel-title Mangler der noget?
 
-    .panel-body
-      = form_tag send_suggestion_mail_url, method: :put, class: 'form-horizontal', role: 'form', remote: true do
-        .form-group
-          = label_tag :name, "Navn", class: 'col-lg-2 control-label'
-          .col-lg-10
-            = text_field_tag :name, params[:name], class: 'form-control'
+      .panel-body
+        = form_tag send_suggestion_mail_url, method: :put, class: 'form-horizontal', role: 'form', remote: true do
+          .form-group
+            = label_tag :name, "Navn", class: 'col-lg-2 control-label'
+            .col-lg-10
+              = text_field_tag :name, params[:name], class: 'form-control'
 
-        .form-group
-          = label_tag :email, "E-mail", class: 'col-lg-2 control-label'
-          .col-lg-10
-            = text_field_tag :email, params[:email], class: 'form-control'
+          .form-group
+            = label_tag :email, "E-mail", class: 'col-lg-2 control-label'
+            .col-lg-10
+              = text_field_tag :email, params[:email], class: 'form-control'
 
-        .form-group
-          = label_tag :suggestion, "Forslag", class: 'col-lg-2 control-label'
-          .col-lg-10
-            = text_area :suggestion, params[:suggestion], class: 'form-control'
+          .form-group
+            = label_tag :suggestion, "Forslag", class: 'col-lg-2 control-label'
+            .col-lg-10
+              = text_area :suggestion, params[:suggestion], class: 'form-control'
 
-        .form-group
-          .col-lg-10.col-lg-offset-2
-            = submit_tag "Send", class: 'btn btn-primary btn-xs', onclick: '$("#send-suggestion-mail-collapse").collapse("hide")'
+          .form-group
+            .col-lg-10.col-lg-offset-2
+              = submit_tag "Send", class: 'btn btn-primary btn-xs', onclick: '$("#send-suggestion-mail-collapse").collapse("hide")'
 
 - content_for :scripts do
-  :javascript
-    var collapsed = true;
-    $("i[data-toggle*='popover']").popover();
-    $("i[data-toggle*='popover']").click(function() {
-      if(collapsed) {
-        $("#send-suggestion-mail-collapse").collapse("show");
-        collapsed = !collapsed;
-      } else {
-        $("#send-suggestion-mail-collapse").collapse("hide");
-        collapsed = !collapsed;
-      }
-    });
-
-    var Sign = function(name, faction_number, search_terms, comment, image_url) {
-      var self = this;
-      self.name = name;
-      self.faction_number = faction_number;
-      self.search_terms = search_terms;
-      self.comment = comment;
-      self.image_url = image_url;
-    }
-
-    function AppViewModel() {
-      var self = this;
-
-      self.search = function() {
-        var value = $('input#search-faction').val();
-        self.searchedSigns([]);
-
-        if (value != "") {
-          $.each(self.signs(), function(index, elem) {
-            if (elem.search_terms.match(value)) {
-              self.searchedSigns.push(elem);
-            }
-          });
+  - cache "vj_signs_#{@last_sign_updated}" do
+    :javascript
+      var collapsed = true;
+      $("i[data-toggle*='popover']").popover();
+      $("i[data-toggle*='popover']").click(function() {
+        if(collapsed) {
+          $("#send-suggestion-mail-collapse").collapse("show");
+          collapsed = !collapsed;
+        } else {
+          $("#send-suggestion-mail-collapse").collapse("hide");
+          collapsed = !collapsed;
         }
+      });
+
+      var Sign = function(name, faction_number, search_terms, comment, image_url) {
+        var self = this;
+        self.name = name;
+        self.faction_number = faction_number;
+        self.search_terms = search_terms;
+        self.comment = comment;
+        self.image_url = image_url;
       }
 
-      self.signs = ko.observableArray([
-        #{
-          @signs.map { |sign| "new Sign('#{sign.name}', '#{sign.faction_number}', '#{sign.search_terms}', '#{sign.comment}', '#{sign.image.url(:medium)}')" }.join(",\n")
+      function AppViewModel() {
+        var self = this;
+
+        self.search = function() {
+          var value = $('input#search-faction').val();
+          self.searchedSigns([]);
+
+          if (value != "") {
+            var re = new RegExp(value, 'gi');
+            $.each(self.signs(), function(index, elem) {
+              if (elem.search_terms.match(re)) {
+                self.searchedSigns.push(elem);
+              }
+            });
+          }
         }
-      ]);
 
-      self.searchedSigns = ko.observableArray();
-    }
+        self.signs = ko.observableArray([
+          #{
+            @signs.map { |sign| "new Sign('#{sign.name}', '#{sign.faction_number}', '#{sign.search_terms}', '#{sign.comment}', '#{sign.image.url(:medium)}')" }.join(",\n")
+          }
+        ]);
 
-    ko.applyBindings(new AppViewModel());
+        self.searchedSigns = ko.observableArray();
+      }
+
+      ko.applyBindings(new AppViewModel());

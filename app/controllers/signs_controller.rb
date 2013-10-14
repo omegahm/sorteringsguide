@@ -4,8 +4,15 @@ class SignsController < ApplicationController
 
   # GET /signs
   def index
-    @signs = Sign.order(:name)
-    @show_signs = params[:show_signs]
+    @signs = Sign.order("UPPER(name)")
+
+    if params[:only]
+      @signs = @signs.where(category: params[:only])
+    end
+
+    @show_images = params[:show_images]
+
+    @last_sign_updated = Sign.order(updated_at: :desc).select(:updated_at).first.updated_at.iso8601
   end
 
   # GET /signs/1

@@ -4,13 +4,22 @@ class RecyclingCentersController < ApplicationController
 
   # GET /recycling_centers
   def index
-    @recycling_centers = RecyclingCenter.order(:name)
+    @last_recycling_center_updated = RecyclingCenter.order(updated_at: :desc).select(:updated_at).first.updated_at.iso8601
+
+    @recycling_centers = Rails.cache.fetch("c_recycling_center_#{@last_recycling_center_updated}") do
+      RecyclingCenter.order(:name)
+    end
   end
 
   # GET /recycling_centers/1
   def show
     @factions = @recycling_center.factions
-    @signs = Sign.for_factions(@factions, @recycling_center.category)
+
+    @last_sign_updated = Sign.order(updated_at: :desc).select(:updated_at).first.updated_at.iso8601
+
+    @signs = Rails.cache.fetch("c_signs_#{@last_sign_updated}") do
+      Sign.for_factions(@factions, @recycling_center.category).select("name, faction_number, comment, image_file_name, (search_terms || ', ' || name) AS search_terms")
+    end
   end
 
   # GET /recycling_centers/new

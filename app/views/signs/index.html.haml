@@ -1,32 +1,57 @@
-.page-header
-  %h1 Skilte
+- cache "v_sign_index_#{@last_sign_updated}_#{params.except(:controller, :action).sort.map {|k,v| "#{k}=#{v}"}.join(",")}" do
+  .page-header
+    %h1 Skilte
 
-%p
-  = link_to 'Nyt skilt', new_sign_path, class: 'btn btn-primary'
-  = link_to 'Vis alle skilte', signs_path(show_signs: true), class: 'btn btn-primary'
+  %p
+    .btn-toolbar
+      .btn-group
+        = link_to 'Nyt skilt', new_sign_path, class: 'btn btn-primary btn-sm'
+        - if @show_images
+          = link_to 'Vis ikke billeder', signs_path(params.except(:show_images)), class: 'btn btn-primary btn-sm'
+        - else
+          = link_to 'Vis alle billeder', signs_path(params.merge(show_images: true)), class: 'btn btn-primary btn-sm'
 
-%table.table.table-striped.table-bordered.table-hover
-  %thead
-    %tr
-      - if @show_signs
-        %th
-      %th Navn
-      %th Faktionsnummer
-      %th Søgeord
-      %th Kommentar
-      %th Kategori
-      %th
-      %th
+      .btn-group
+        - Sign::SIGN_CATEGORIES.each do |category|
+          = link_to "Vis kun #{category.downcase} skilte", signs_path(params.merge(only: category)), class: 'btn btn-primary btn-sm'
 
-  %tbody
-    - @signs.each do |sign|
+
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
       %tr
-        - if @show_signs
-          %td= image_tag sign.image(:thumb).url
-        %td= sign.name
-        %td= sign.faction_number
-        %td= sign.search_terms
-        %td= sign.comment
-        %td= sign.category
-        %td= link_to t('helpers.edit'), edit_sign_path(sign), class: 'btn btn-xs btn-primary'
-        %td= link_to t('helpers.destroy'), sign, method: :delete, data: { confirm: t('helpers.are_you_sure') }, class: 'btn btn-xs btn-danger'
+        - if @show_images
+          %th Skilt
+        %th Navn
+        %th Faktionsnummer
+        %th Søgeord
+        %th Kommentar
+        %th Kategori
+        %th
+        %th
+
+    %tbody
+      - last_letter = ''
+      - @signs.each do |sign|
+        - if last_letter != sign.name.first.upcase
+          - last_letter = sign.name.first.upcase
+          %tr
+            %th= last_letter
+            %th
+            %th
+            %th
+            %th
+            %th
+            %th
+            - if @show_images
+              %th
+
+        %tr
+          - if @show_images
+            %td= image_tag sign.image(:thumb) if sign.image.present?
+          %td= sign.name
+          %td= sign.faction_number
+          %td= sign.search_terms
+          %td= sign.comment
+          %td= sign.category
+          %td= link_to t('helpers.edit'), edit_sign_path(sign), class: 'btn btn-xs btn-primary'
+          %td= link_to t('helpers.destroy'), sign, method: :delete, data: { confirm: t('helpers.are_you_sure') }, class: 'btn btn-xs btn-danger'

@@ -2,57 +2,58 @@
   %script{src: '//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false'}
 
 - content_for :scripts do
-  :javascript
-    $(document).ready(function() {
-      function initialize() {
-        google.maps.visualRefresh = true;
+  - cache "vj_home_#{@last_recycling_center_updated}" do
+    :javascript
+      $(document).ready(function() {
+        function initialize() {
+          google.maps.visualRefresh = true;
 
-        var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+          var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
 
-        var mapOptions = {
-          zoom: 10,
-          disableDefaultUI: true,
-          scaleControl: false,
-          draggable: false,
-          navigationControl: false,
-          mapTypeControl: false,
-          disableDoubleClickZoom: true,
-          scrollwheel: false
+          var mapOptions = {
+            zoom: 10,
+            disableDefaultUI: true,
+            scaleControl: false,
+            draggable: false,
+            navigationControl: false,
+            mapTypeControl: false,
+            disableDoubleClickZoom: true,
+            scrollwheel: false
+          }
+
+          var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+          var bounds = new google.maps.LatLngBounds();
+          var marker;
+
+          #{
+            @recycling_centers.select {|rc| rc.lat.present? and rc.lng.present? }.map { |rc| "
+            var myLatLng = new google.maps.LatLng(#{rc.lat}, #{rc.lng});
+            bounds.extend(myLatLng);
+
+            marker = new google.maps.Marker({
+              position: myLatLng,
+              map: map,
+              animation: google.maps.Animation.DROP
+            });
+
+            google.maps.event.addListener(marker, 'click', function() {
+              window.location = '#{recycling_center_path(rc)}';
+            });" }.join("\n")
+          }
+
+          map.fitBounds(bounds);
         }
 
-        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-        var bounds = new google.maps.LatLngBounds();
-        var marker;
+        google.maps.event.addDomListener(window, 'load', initialize);
+      });
 
-        #{
-          @recycling_centers.select {|rc| rc.lat.present? and rc.lng.present? }.map { |rc| "
-          var myLatLng = new google.maps.LatLng(#{rc.lat}, #{rc.lng});
-          bounds.extend(myLatLng);
+- cache "v_home_#{@last_recycling_center_updated}" do
+  %h1 Sorteringsguide
 
-          marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map,
-            animation: google.maps.Animation.DROP
-          });
+  #map-canvas
 
-          google.maps.event.addListener(marker, 'click', function() {
-            window.location = '#{recycling_center_path(rc)}';
-          });" }.join("\n")
-        }
+  %br
 
-        map.fitBounds(bounds);
-      }
-
-      google.maps.event.addDomListener(window, 'load', initialize);
-    });
-
-
-%h1 Sorteringsguide
-
-#map-canvas
-
-%br
-
-%ul.recycling-centers
-  - @recycling_centers.each do |rc|
-    %li= link_to rc.name, rc
+  %ul.recycling-centers
+    - @recycling_centers.each do |rc|
+      %li= link_to rc.name, rc

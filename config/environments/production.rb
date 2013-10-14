@@ -50,7 +50,7 @@ Sorteringsguide::Application.configure do
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
   # Use a different cache store in production.
-  config.cache_store = :dalli_store
+  config.cache_store = :dalli_store, { compress: true }
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = "http://assets.example.com"
@@ -93,3 +93,10 @@ Sorteringsguide::Application.configure do
     :enable_starttls_auto => true
   }
 end
+
+Sorteringsguide::Application.config.middleware.use ExceptionNotification::Rack,
+  email: {
+    email_prefix: "[Sorteringsguide] ",
+    sender_address: %{"Notifer" <notifier@sorteringsguide.dk>},
+    exception_recipients: ENV['EXCEPTION_LIST']
+  }
