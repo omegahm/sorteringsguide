@@ -1,0 +1,42 @@
+.page-header
+  %h1= title
+
+= form_for @admin, url: user_path(@admin), html: { class: 'form-horizontal', role: 'form', multipart: true } do |f|
+  - if @admin.errors.any?
+    .panel.panel-danger
+      .panel-heading= t('errors.template.header', count: @admin.errors.count, model: t("activerecord.models.#{@admin.class.to_s.downcase}").downcase)
+      .panel-body
+        = t('errors.template.body')
+
+        %ul
+          - @admin.errors.full_messages.each do |msg|
+            %li= msg
+
+  .form-group
+    = f.label :email, class: 'col-lg-2 control-label'
+    .col-lg-10
+      = f.text_field :email, class: 'form-control'
+
+  .form-group
+    = f.label :password, class: 'col-lg-2 control-label'
+    .col-lg-10
+      = f.password_field :password, class: 'form-control'
+
+      - unless @admin.new_record?
+        %p.help-block Udfyld kodeord for at lave nyt
+
+  .form-group
+    = f.label :password_confirmation, class: 'col-lg-2 control-label'
+    .col-lg-10
+      = f.password_field :password_confirmation, class: 'form-control'
+      %p.help-block Gentag kodeord
+
+  .form-group
+    = f.label :mails, class: 'col-lg-2 control-label'
+    .col-lg-10
+      = f.check_box :mails, class: 'form-control'
+
+  .form-group
+    .col-lg-10.col-lg-offset-2
+      = f.submit class: 'btn btn-primary btn-xs'
+      = link_to t('helpers.back'), users_path

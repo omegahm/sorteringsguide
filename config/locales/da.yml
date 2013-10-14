@@ -205,9 +205,15 @@ da:
   activerecord:
     models:
       sign: Skilt
+      admin: Admin
       recyclingcenter: Genbrugsstation
       recycling_center: Genbrugsstation
     attributes:
+      admin:
+        email: E-mail
+        mails: Mails?
+        password: Kodeord
+        password_confirmation: Kodeord igen
       sign:
         name: Navn
         faction_number: Faktionsnummer

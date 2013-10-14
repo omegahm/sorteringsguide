@@ -1,0 +1,26 @@
+- cache "v_admins_index_#{@last_admin_updated}" do
+  .page-header
+    %h1 Administratorer
+
+  %p
+    = link_to 'Nyt admin', new_user_path, class: 'btn btn-primary btn-sm'
+
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th E-mail
+        %th Mails?
+        %th
+        %th
+
+    %tbody
+      - @admins.each do |user|
+        %tr
+          %td= user.email
+          %td
+            - if user.mails
+              %i.glyphicon.glyphicon-ok
+            - else
+              %i.glyphicon.glyphicon-remove
+          %td= link_to t('helpers.edit'), edit_user_path(user), class: 'btn btn-xs btn-primary'
+          %td= link_to t('helpers.destroy'), user_path(user), method: :delete, data: { confirm: t('helpers.are_you_sure') }, class: 'btn btn-xs btn-danger'

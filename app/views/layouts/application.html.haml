@@ -24,6 +24,7 @@
           %li= link_to "Hjem", root_path
 
         %ul.nav.navbar-nav.navbar-right
+          %li= link_to 'Admins', users_path
           %li= link_to 'Skilte', signs_path
           %li= link_to 'Genbrugsstationer', recycling_centers_path
           %li= link_to 'Log ud', destroy_admin_session_path, method: :delete
