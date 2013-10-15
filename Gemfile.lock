@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/jetthoughts/yaml_db.git
+  revision: fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba
+  ref: fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba
+  specs:
+    yaml_db (0.2.3)
+
+GIT
   remote: git://github.com/thomas-mcdonald/bootstrap-sass.git
   revision: c0e12a90ba3e44ab68d3f153411fba3edc400b2a
   specs:
@@ -345,4 +352,5 @@ DEPENDENCIES
   shoulda-matchers
   uglifier
   unicorn-rails
+  yaml_db!
   yui-compressor

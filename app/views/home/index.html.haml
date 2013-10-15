@@ -64,7 +64,7 @@
   .col-xs-3
     %ul.recycling-centers
       - @recycling_centers.each do |rc|
-        %li{id: rc.name.parameterize}= link_to rc.name, rc
+        %li{id: rc.name.parameterize}= link_to rc.name.gsub(/genbrugsstation/, ''), rc
 
   .col-xs-7
     #map-canvas
