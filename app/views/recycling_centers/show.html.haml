@@ -57,6 +57,7 @@
 - content_for :scripts do
   - cache "vj_signs_#{@last_sign_updated}_#{@recycling_center.id}" do
     :javascript
+      //<![CDATA[
       var collapsed = true;
       $("i[data-toggle*='popover']").popover();
       $("i[data-toggle*='popover']").click(function() {
@@ -105,3 +106,4 @@
       }
 
       ko.applyBindings(new AppViewModel());
+      //]]>

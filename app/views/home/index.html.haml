@@ -4,6 +4,7 @@
 - content_for :scripts do
   - cache "vj_home_#{@last_recycling_center_updated}" do
     :javascript
+      //<![CDATA[
       $(document).ready(function() {
         function initialize() {
           google.maps.visualRefresh = true;
@@ -46,6 +47,7 @@
 
         google.maps.event.addDomListener(window, 'load', initialize);
       });
+      //]]>
 
 - cache "v_home_#{@last_recycling_center_updated}" do
   %h1 Sorteringsguide
