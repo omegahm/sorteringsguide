@@ -28,7 +28,7 @@ describe SignsController do
         get :index
 
         assigns(:signs).should == [@sign]
-        assigns(:last_sign_updated).should == @sign.updated_at.iso8601
+        assigns(:last_sign_updated).should == @sign.updated_at.to_i
       end
     end
   end

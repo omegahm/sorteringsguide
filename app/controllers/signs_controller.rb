@@ -12,7 +12,7 @@ class SignsController < ApplicationController
 
     @show_images = params[:show_images]
 
-    @last_sign_updated = Sign.order(updated_at: :desc).select(:updated_at).first.updated_at.iso8601
+    @last_sign_updated = Sign.order(updated_at: :desc).select(:updated_at).first.updated_at.to_i
   end
 
   # GET /signs/1

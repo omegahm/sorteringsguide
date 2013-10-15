@@ -23,7 +23,7 @@ describe AdminsController do
       it 'assigns admins and last updated' do
         get :index
         assigns(:admins).should == [@admin]
-        assigns(:last_admin_updated).should == @admin.updated_at.iso8601
+        assigns(:last_admin_updated).should == @admin.updated_at.to_i
       end
     end
 

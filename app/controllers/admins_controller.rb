@@ -6,7 +6,7 @@ class AdminsController < ApplicationController
   def index
     @admins = Admin.order(email: :desc)
 
-    @last_admin_updated = Admin.order(updated_at: :desc).select(:updated_at).first.updated_at.iso8601
+    @last_admin_updated = Admin.order(updated_at: :desc).select(:updated_at).first.updated_at.to_i
   end
 
   # GET /users/new

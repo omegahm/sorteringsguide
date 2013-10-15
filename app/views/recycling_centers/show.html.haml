@@ -1,4 +1,4 @@
-- cache "v_signs_#{@last_sign_updated}" do
+- cache "v_signs_#{@last_sign_updated}_#{@recycling_center.id}" do
   %p
     %small
       = link_to "Tilbage", root_path
@@ -55,7 +55,7 @@
               = submit_tag "Send", class: 'btn btn-primary btn-xs', onclick: '$("#send-suggestion-mail-collapse").collapse("hide")'
 
 - content_for :scripts do
-  - cache "vj_signs_#{@last_sign_updated}" do
+  - cache "vj_signs_#{@last_sign_updated}_#{@recycling_center.id}" do
     :javascript
       var collapsed = true;
       $("i[data-toggle*='popover']").popover();
