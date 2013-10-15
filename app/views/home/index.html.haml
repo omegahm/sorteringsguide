@@ -39,7 +39,16 @@
 
             google.maps.event.addListener(marker, 'click', function() {
               window.location = '#{recycling_center_path(rc)}';
-            });" }.join("\n")
+            });
+
+            google.maps.event.addListener(marker, 'mouseover', function() {
+              $('##{rc.name.parameterize}').css({fontWeight: 'bold'});
+            });
+
+            google.maps.event.addListener(marker, 'mouseout', function() {
+              $('##{rc.name.parameterize}').css({fontWeight: 'normal'});
+            });
+            " }.join("\n")
           }
 
           map.fitBounds(bounds);
@@ -52,10 +61,10 @@
 - cache "v_home_#{@last_recycling_center_updated}" do
   %h1 Sorteringsguide
 
-  #map-canvas
+  .col-xs-3
+    %ul.recycling-centers
+      - @recycling_centers.each do |rc|
+        %li{id: rc.name.parameterize}= link_to rc.name, rc
 
-  %br
-
-  %ul.recycling-centers
-    - @recycling_centers.each do |rc|
-      %li= link_to rc.name, rc
+  .col-xs-7
+    #map-canvas

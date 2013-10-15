@@ -26,6 +26,7 @@ ul.recycling-centers {
   margin-bottom: 20px;
   overflow: hidden;
   list-style: none;
+  padding: 0;
 
   li {
     font-size: 12px;
@@ -33,5 +34,9 @@ ul.recycling-centers {
     float: left;
     display: inline;
     width: 50%;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
   }
 }
