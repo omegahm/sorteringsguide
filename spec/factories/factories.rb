@@ -9,8 +9,8 @@ FactoryGirl.define do
   end
 
   factory :sign do |sign|
-    sign.name 'asfalt'
-    sign.sequence(:faction_number) { |n| n }
+    sign.sequence(:name) {|n| "asfalt#{n}" }
+    sign.sequence(:faction_number) {|n| n }
     sign.comment 'this is a comment'
     sign.category Sign::SIGN_CATEGORIES.first
     sign.search_terms 'asfalt jord møg'
