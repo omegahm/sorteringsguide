@@ -35,7 +35,7 @@
       - get_all_factions.in_groups_of(10, false) do |fac_group|
         - fac_group.each do |fac|
           %label.checkbox-inline
-            = check_box_tag "factions[#{fac}]", fac, @recycling_center.factions.present? && @recycling_center.factions.include?(fac), :name => "recycling_center[factions][]"
+            = check_box_tag "factions[#{fac}]", fac, @recycling_center.factions.present? && @recycling_center.factions.include?(fac), name: "recycling_center[factions][]"
             = fac
         %br
 

@@ -35,7 +35,10 @@
   .form-group
     = f.label :category, class: 'col-lg-2 control-label'
     .col-lg-10
-      = f.select :category, Sign::SIGN_CATEGORIES
+      - Sign::SIGN_CATEGORIES.each do |category|
+        %label.checkbox-inline
+          = check_box_tag "categories[#{category}]", category, @all_categories_for_sign.include?(category), name: "sign[categories][]"
+          = category
 
   .form-group
     = f.label :image, class: 'col-lg-2 control-label'

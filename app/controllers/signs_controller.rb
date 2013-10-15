@@ -12,27 +12,28 @@ class SignsController < ApplicationController
 
     @show_images = params[:show_images]
 
-    @last_sign_updated = Sign.order(updated_at: :desc).select(:updated_at).first.updated_at.to_i
-  end
-
-  # GET /signs/1
-  def show
+    set_last_updated_at
   end
 
   # GET /signs/new
   def new
     @sign = Sign.new
+    @all_categories_for_sign = Sign.where(name: @sign.name).pluck(:category)
   end
 
   # GET /signs/1/edit
   def edit
+    @all_categories_for_sign = Sign.where(name: @sign.name).pluck(:category)
   end
 
   # POST /signs
   def create
-    @sign = Sign.new(sign_params)
+    success = sign_params[:categories].all? do |category|
+      @sign = Sign.new(sign_params.except(:categories).merge(category: category))
+      @sign.save
+    end
 
-    if @sign.save
+    if success
       redirect_to signs_path, notice: t('helpers.was_created', model: 'Skilt')
     else
       render action: 'new'
@@ -41,7 +42,31 @@ class SignsController < ApplicationController
 
   # PATCH/PUT /signs/1
   def update
-    if @sign.update(sign_params)
+    name_was = @sign.name
+
+    success = @sign.update(sign_params.except(:categories))
+
+    if success
+      success = sign_params[:categories].all? do |category|
+        if category == @sign.category
+          true
+        else
+
+          signs = Sign.where(category: category, name: name_was)
+
+          if signs.present?
+            signs.all? do |sign|
+              sign.update_attributes(sign_params.except(:categories))
+            end
+          else
+            sign = Sign.new(sign_params.except(:categories).merge(category: category))
+            sign.save
+          end
+        end
+      end
+    end
+
+    if success
       redirect_to signs_path, notice: t('helpers.was_updated', model: 'Skilt')
     else
       render action: 'edit'
@@ -51,6 +76,7 @@ class SignsController < ApplicationController
   # DELETE /signs/1
   def destroy
     @sign.destroy
+    Rails.cache.clear
 
     redirect_to signs_url
   end
@@ -63,6 +89,10 @@ class SignsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def sign_params
-      params.require(:sign).permit(:name, :faction_number, :search_terms, :comment, :category, :image)
+      params.require(:sign).permit(:name, :faction_number, :search_terms, :comment, :image, { categories: [] })
+    end
+
+    def set_last_updated_at
+      @last_sign_updated = Sign.order(updated_at: :desc).select(:updated_at).first.updated_at.to_i
     end
 end

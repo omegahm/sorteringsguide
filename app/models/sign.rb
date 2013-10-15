@@ -8,6 +8,7 @@ class Sign < ActiveRecord::Base
                     }
 
   validates_presence_of :name, :category
+  validates_uniqueness_of :name, scope: :category
 
   scope :for_factions, ->(faction_numbers, category) { where(faction_number: faction_numbers, category: category) }
 end

@@ -84,19 +84,19 @@ Sorteringsguide::Application.configure do
 
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
-    :address        => 'smtp.sendgrid.net',
-    :port           => '587',
-    :authentication => :plain,
-    :user_name      => ENV['SENDGRID_USERNAME'],
-    :password       => ENV['SENDGRID_PASSWORD'],
-    :domain         => 'herokuapp.com',
-    :enable_starttls_auto => true
+    address:              'smtp.sendgrid.net',
+    port:                 '587',
+    authentication:       :plain,
+    user_name:            ENV['SENDGRID_USERNAME'],
+    password:             ENV['SENDGRID_PASSWORD'],
+    domain:               'herokuapp.com',
+    enable_starttls_auto: true
   }
 end
 
 Sorteringsguide::Application.config.middleware.use ExceptionNotification::Rack,
   email: {
-    email_prefix: "[Sorteringsguide] ",
-    sender_address: %{"Notifer" <notifier@sorteringsguide.dk>},
+    email_prefix:         "[Sorteringsguide] ",
+    sender_address:       %{"Notifer" <notifier@sorteringsguide.dk>},
     exception_recipients: ENV['EXCEPTION_LIST']
   }

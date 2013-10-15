@@ -14,7 +14,7 @@
       .btn-group
         - Sign::SIGN_CATEGORIES.each do |category|
           = link_to "Vis kun #{category.downcase} skilte", signs_path(params.merge(only: category)), class: 'btn btn-primary btn-sm'
-
+        = link_to "Vis alle skilte", signs_path(params.except(:only)), class: 'btn btn-primary btn-sm' if params[:only].present?
 
   %table.table.table-striped.table-bordered.table-hover
     %thead

@@ -53,6 +53,7 @@ class RecyclingCentersController < ApplicationController
   # DELETE /recycling_centers/1
   def destroy
     @recycling_center.destroy
+    Rails.cache.clear
 
     redirect_to recycling_centers_url
   end
@@ -65,6 +66,6 @@ class RecyclingCentersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def recycling_center_params
-      params.require(:recycling_center).permit(:name, :address, :latitude, :longitude, :category, { :factions => [] })
+      params.require(:recycling_center).permit(:name, :address, :latitude, :longitude, :category, { factions: [] })
     end
 end
