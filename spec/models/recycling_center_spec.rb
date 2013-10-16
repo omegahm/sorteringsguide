@@ -7,6 +7,17 @@ describe RecyclingCenter do
       rc.should_receive(:encode_location)
       rc.save
     end
+
+    it 'reencodes lat and lng if address is changed' do
+      rc = FactoryGirl.create(:recycling_center)
+      lat, lng = rc.lat, rc.lng
+
+      rc.address = 'Glostrup genbrugsplads, 2600 Glostrup'
+      rc.save
+
+      rc.lat.should_not == lat
+      rc.lng.should_not == lng
+    end
   end
 end
 
