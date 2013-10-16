@@ -1,6 +1,7 @@
 class SignsController < ApplicationController
   before_action :set_sign, only: [:show, :edit, :update, :destroy]
   before_filter :authenticate_admin!
+  before_filter :set_last_updated_at, only: [:index]
 
   # GET /signs
   def index
@@ -11,8 +12,6 @@ class SignsController < ApplicationController
     end
 
     @show_images = params[:show_images]
-
-    set_last_updated_at
   end
 
   # GET /signs/new
@@ -46,24 +45,8 @@ class SignsController < ApplicationController
 
     success = @sign.update(sign_params.except(:categories))
 
-    if success
-      success = sign_params[:categories].all? do |category|
-        if category == @sign.category
-          true
-        else
-
-          signs = Sign.where(category: category, name: name_was)
-
-          if signs.present?
-            signs.all? do |sign|
-              sign.update_attributes(sign_params.except(:categories))
-            end
-          else
-            sign = Sign.new(sign_params.except(:categories).merge(category: category))
-            sign.save
-          end
-        end
-      end
+    success &&= sign_params[:categories].all? do |category|
+      (category != @sign.category) or update_signs(category)
     end
 
     if success
@@ -94,5 +77,17 @@ class SignsController < ApplicationController
 
     def set_last_updated_at
       @last_sign_updated = Sign.order(updated_at: :desc).select(:updated_at).first.updated_at.to_i
+    end
+
+    def update_signs(category)
+      att = sign_params.except(:categories).merge(category: category)
+      signs = Sign.where(category: category, name: name_was)
+
+      if signs.present?
+        signs.all? {|sign| sign.update_attributes(att) }
+      else
+        sign = Sign.new(att)
+        sign.save
+      end
     end
 end

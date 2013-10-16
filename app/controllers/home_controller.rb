@@ -1,10 +1,6 @@
 class HomeController < ApplicationController
   def index
-    @last_recycling_center_updated = RecyclingCenter.order(updated_at: :desc).select(:updated_at).first.updated_at.to_i
-
-    @recycling_centers = Rails.cache.fetch("c_recycling_center_#{@last_recycling_center_updated}") do
-      RecyclingCenter.order(:name)
-    end
+    @recycling_centers = cached_recycling_centers
   end
 
   def send_suggestion_mail
