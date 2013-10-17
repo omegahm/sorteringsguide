@@ -27,12 +27,12 @@ class SignsController < ApplicationController
 
   # POST /signs
   def create
-    success = sign_params[:categories].all? do |category|
+    success = (sign_params[:categories].presence || []).all? do |category|
       @sign = Sign.new(sign_params.except(:categories).merge(category: category))
       @sign.save
     end
 
-    if success
+    if success and sign_params[:categories].present?
       redirect_to signs_path, notice: t('helpers.was_created', model: 'Skilt')
     else
       render action: 'new'
@@ -45,11 +45,11 @@ class SignsController < ApplicationController
 
     success = @sign.update(sign_params.except(:categories))
 
-    success &&= sign_params[:categories].all? do |category|
-      (category != @sign.category) or update_signs(category)
+    success &&= (sign_params[:categories].presence || []).all? do |category|
+      (category == @sign.category) or update_signs(category, name_was)
     end
 
-    if success
+    if success and sign_params[:categories].present?
       redirect_to signs_path, notice: t('helpers.was_updated', model: 'Skilt')
     else
       render action: 'edit'
@@ -79,7 +79,7 @@ class SignsController < ApplicationController
       @last_sign_updated = Sign.order(updated_at: :desc).select(:updated_at).first.updated_at.to_i
     end
 
-    def update_signs(category)
+    def update_signs(category, name_was)
       att = sign_params.except(:categories).merge(category: category)
       signs = Sign.where(category: category, name: name_was)
 

@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe RecyclingCenter do
-  context 'before_*' do
+  context 'before_validation' do
     it 'calls encode_location before validation' do
-      rc = FactoryGirl.build(:recycling_center)
+      rc = FactoryGirl.build(:recycling_center, lat: nil, lng: nil)
+
       rc.should_receive(:encode_location)
       rc.save
     end

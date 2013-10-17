@@ -53,4 +53,5 @@ group :test do
   gem 'fuubar'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
+  gem 'simplecov', require: false
 end

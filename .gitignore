@@ -18,3 +18,4 @@
 
 config/initializers/confidential_information.rb
 public/system
+coverage

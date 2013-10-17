@@ -8,8 +8,8 @@ class Sign < ActiveRecord::Base
                     },
                     default_url: 'signs/:style/missing.png'
 
-  validates_presence_of :name, :category
-  validates_uniqueness_of :name, scope: :category
+  validates_presence_of :category
+  validates_uniqueness_of :name, scope: :category, if: ->{ name != '' }
 
   scope :for_factions, ->(faction_numbers, category) { where(faction_number: faction_numbers, category: category) }
 end

@@ -33,6 +33,61 @@ describe AdminsController do
         response.should be_redirect
         response.should redirect_to(users_path)
       end
+
+      context 'with password blank' do
+        it 'doesnt change password' do
+          new_email = "some@email2.com"
+          password = @admin.password
+
+          patch :update, id: @admin.id, admin: { email: new_email }
+
+          response.should be_redirect
+          response.should redirect_to(users_path)
+
+          @admin.reload
+          @admin.email.should == new_email
+          @admin.password.should == password
+        end
+      end
+
+      context 'invalid params' do
+        it 'renders edit' do
+          patch :update, id: @admin.id, admin: { email: 'not_an_email' }
+          response.should_not be_redirect
+          response.should render_template(:edit)
+        end
+      end
+    end
+
+    describe 'GET #new' do
+      it 'renders' do
+        get :new
+        response.should be_success
+      end
+    end
+
+    describe 'POST #create' do
+      context 'valid params' do
+        it 'should create new admin' do
+          post :create, admin: { email: 'some@email.com', password: 'secret', password_confirmation: 'secret' }
+          Admin.count.should == 2 # The one logged in and this new one
+        end
+      end
+
+      context 'invalid params' do
+        it 'renders new' do
+          post :create, admin: { email: 'not_an_email' }
+          response.should_not be_redirect
+          response.should render_template(:new)
+        end
+      end
+    end
+
+    describe 'DELETE #destroy' do
+      it 'deletes the admin' do
+        delete :destroy, id: @admin.id
+        Admin.where(id: @admin.id).should be_empty
+      end
     end
   end
 end

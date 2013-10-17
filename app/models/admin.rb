@@ -1,11 +1,7 @@
 class Admin < ActiveRecord::Base
-  if Rails.env.production?
-    devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
-  else
-    devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable, :registerable
-  end
+  devise :database_authenticatable, :recoverable, :rememberable, :trackable, :validatable
 
-  scope :wants_mail, ->{ where("mails = 't'") }
+  scope :wants_mail, ->{ where(mails: true) }
 end
 
 # == Schema Information
