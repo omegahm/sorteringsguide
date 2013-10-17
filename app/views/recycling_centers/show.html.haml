@@ -1,4 +1,4 @@
-- cache "v_signs_#{@last_sign_updated}_#{@recycling_center.id}" do
+- cache "v_signs_#{@last_sign_updated}_#{@recycling_center.updated_at.to_i}_#{@recycling_center.id}" do
   %p
     %small= link_to "Tilbage", root_path
     %i.pull-right.glyphicon.glyphicon-question-sign(style="cursor: pointer;" data-toggle="popover" data-trigger="hover" data-container="body" data-placement="left" data-content="Klik her og udfyld formularen for at sende forslag til Vestforbrænding." data-title="Mangler der noget?")
@@ -17,7 +17,7 @@
         %th Kommentar
     %tbody(data-bind="foreach: searchedSigns")
       %tr
-        %td(data-bind="if: !(image_url == '' || image_url == '/images/medium/missing.png')")
+        %td(data-bind="if: !(image_url == '' || image_url == 'signs/medium/missing.png')")
           %img(data-bind="attr: { src: image_url }")
         %td(data-bind="text: faction_number")
         %td(data-bind="text: name")
@@ -54,7 +54,7 @@
               = submit_tag "Send", class: 'btn btn-primary btn-xs', onclick: '$("#send-suggestion-mail-collapse").collapse("hide")'
 
 - content_for :scripts do
-  - cache "vj_signs_#{@last_sign_updated}_#{@recycling_center.id}" do
+  - cache "vj_signs_#{@last_sign_updated}_#{@recycling_center.updated_at.to_i}_#{@recycling_center.id}" do
     :javascript
       //<![CDATA[
       var collapsed = true;
