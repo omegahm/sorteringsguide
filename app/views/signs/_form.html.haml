@@ -39,6 +39,8 @@
         %label.checkbox-inline
           = check_box_tag "categories[#{category}]", category, @all_categories_for_sign.include?(category), name: "sign[categories][]"
           = category
+      - if @all_categories_for_sign.count > 1
+        %small.help-block= "Note: du ændrer alle skilte, som hedder '#{@sign.name}', hvis du fortsat har mærkeret flere kategorier."
 
   .form-group
     = f.label :image, class: 'col-lg-2 control-label'

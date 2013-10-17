@@ -1,7 +1,7 @@
 - cache "v_signs_#{@last_sign_updated}_#{@recycling_center.id}" do
   %p
-    %small
-      = link_to "Tilbage", root_path
+    %small= link_to "Tilbage", root_path
+    %i.pull-right.glyphicon.glyphicon-question-sign(style="cursor: pointer;" data-toggle="popover" data-trigger="hover" data-container="body" data-placement="left" data-content="Klik her og udfyld formularen for at sende forslag til Vestforbrænding." data-title="Mangler der noget?")
 
   %h2= @recycling_center.name
 
@@ -23,15 +23,14 @@
         %td(data-bind="text: name")
         %td(data-bind="text: comment")
 
-  %p.pull-right
-    %i.glyphicon.glyphicon-question-sign(style="cursor: pointer;" data-toggle="popover" data-trigger="hover" data-container="body" data-placement="left" data-content="Klik her og udfyld formularen for at sende forslag til Vestforbrænding." data-title="Mangler der noget?")
-
   .clearfix
 
   #send-suggestion-mail-collapse.collapse
     .panel.panel-default
       .panel-heading
-        %h3.panel-title Mangler der noget?
+        %h3.panel-title
+          Mangler der noget?
+          %a.pull-right(data-toggle="collapse" href="#send-suggestion-mail-collapse") &times;
 
       .panel-body
         = form_tag send_suggestion_mail_url, method: :put, class: 'form-horizontal', role: 'form', remote: true do
@@ -61,13 +60,7 @@
       var collapsed = true;
       $("i[data-toggle*='popover']").popover();
       $("i[data-toggle*='popover']").click(function() {
-        if(collapsed) {
-          $("#send-suggestion-mail-collapse").collapse("show");
-          collapsed = !collapsed;
-        } else {
-          $("#send-suggestion-mail-collapse").collapse("hide");
-          collapsed = !collapsed;
-        }
+        $("#send-suggestion-mail-collapse").collapse("toggle");
       });
 
       var Sign = function(name, faction_number, search_terms, comment, image_url) {

@@ -42,11 +42,11 @@
             });
 
             google.maps.event.addListener(marker, 'mouseover', function() {
-              $('##{rc.name.parameterize}').css({fontWeight: 'bold'});
+              $('##{rc.name.parameterize}').css({textDecoration: 'underline'});
             });
 
             google.maps.event.addListener(marker, 'mouseout', function() {
-              $('##{rc.name.parameterize}').css({fontWeight: 'normal'});
+              $('##{rc.name.parameterize}').css({textDecoration: 'none'});
             });
             " }.join("\n")
           }
@@ -66,5 +66,5 @@
       - @recycling_centers.each do |rc|
         %li{id: rc.name.parameterize}= link_to rc.name.gsub(/genbrugsstation/i, ''), rc
 
-  .col-xs-7
+  .col-xs-9
     #map-canvas
