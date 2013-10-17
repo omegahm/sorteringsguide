@@ -32,10 +32,6 @@ Sorteringsguide::Application.configure do
   config.assets.debug = true
   config.serve_static_assets = true
 
-  if ENV['FOG_DIRECTORY'].present?
-    config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.storage.googleapis.com"
-  end
-
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = { address: "localhost", port: 1025 }
 
