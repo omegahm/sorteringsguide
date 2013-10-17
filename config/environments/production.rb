@@ -82,6 +82,18 @@ Sorteringsguide::Application.configure do
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
 
+  config.paperclip_defaults = {
+    storage: :fog,
+
+    fog_credentials: {
+      provider:                         ENV['FOG_PROVIDER'],
+      google_storage_access_key_id:     ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'],
+      google_storage_secret_access_key: ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY'],
+    },
+
+    fog_directory:  ENV['FOG_DIRECTORY']
+  }
+
   ActionMailer::Base.delivery_method = :smtp
   ActionMailer::Base.smtp_settings = {
     address:              'smtp.sendgrid.net',
