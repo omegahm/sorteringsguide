@@ -91,7 +91,7 @@
 
         self.signs = ko.observableArray([
           #{
-            @signs.map { |sign| "new Sign('#{sign.name}', '#{sign.faction_number}', '#{sign.search_terms}', '#{sign.comment}', '#{sign.image.url(:medium)}')" }.join(",\n")
+            @signs.map { |sign| "new Sign('#{sign.name}', '#{sign.faction_number}', '#{sign.search_terms}', '#{sign.comment}', '#{sign.image(:medium)}')" }.join(",\n")
           }
         ]);
 
