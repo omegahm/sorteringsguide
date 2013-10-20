@@ -1,2 +1,2 @@
-web: thin -R config.ru -p 3000 start
+web: bundle exec puma -p 3000
 memcache: memcached -p 11211
