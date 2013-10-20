@@ -216,7 +216,7 @@ da:
         password_confirmation: Kodeord igen
       sign:
         name: Navn
-        faction_number: Faktionsnummer
+        faction_number: Fraktionsnummer
         search_terms: Søgeord
         comment: Kommentar
         image: Billede
@@ -225,4 +225,4 @@ da:
         name: Navn
         address: Adresse
         category: Skiltekategori
-        factions: Faktioner
+        factions: Fraktioner

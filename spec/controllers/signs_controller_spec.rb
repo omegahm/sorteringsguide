@@ -84,6 +84,7 @@ describe SignsController do
         it 'updates' do
           patch :update, id: @sign1.id, sign: { name: 'Nyt skilt' }
           @sign1.reload.name.should == 'Nyt skilt'
+          @sign2.reload.name.should_not == 'Nyt skilt'
         end
 
         it 'updates more than one' do
@@ -96,6 +97,7 @@ describe SignsController do
         it 'updates and creates' do
           patch :update, id: @sign1.id, sign: { name: 'Nyt skilt', categories: [@sign1.category, 'Farvede'] }
           Sign.count.should == 3
+          @sign2.reload.name.should_not == 'Nyt skilt'
         end
       end
 
