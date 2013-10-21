@@ -7,9 +7,9 @@
       .btn-group
         = link_to 'Nyt skilt', new_sign_path, class: 'btn btn-primary btn-sm'
         - if @show_images
-          = link_to 'Vis ikke billeder', signs_path(params.except(:show_images)), class: 'btn btn-primary btn-sm'
+          = link_to 'Vis ikke billeder', signs_path(params.merge(show_images: false)), class: 'btn btn-primary btn-sm'
         - else
-          = link_to 'Vis alle billeder', signs_path(params.merge(show_images: true)), class: 'btn btn-primary btn-sm'
+          = link_to 'Vis alle billeder', signs_path(params.except(:show_images)), class: 'btn btn-primary btn-sm'
 
       .btn-group
         - Sign::SIGN_CATEGORIES.each do |category|

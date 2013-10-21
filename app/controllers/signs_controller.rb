@@ -11,7 +11,7 @@ class SignsController < ApplicationController
       @signs = @signs.where(category: params[:only])
     end
 
-    @show_images = params[:show_images]
+    @show_images = !params[:show_images].present?
   end
 
   # GET /signs/new
