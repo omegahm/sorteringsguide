@@ -32,11 +32,7 @@ class SignsController < ApplicationController
       @sign.save
     end
 
-    if success and sign_params[:categories].present?
-      redirect_to signs_path, notice: t('helpers.was_created', model: 'Skilt')
-    else
-      render action: 'new'
-    end
+    success_or_redirect(success && sign_params[:categories].present?, t('helpers.was_created', model: 'Skilt'), 'new')
   end
 
   # PATCH/PUT /signs/1
@@ -49,11 +45,7 @@ class SignsController < ApplicationController
       (category == @sign.category) or update_signs(category, name_was)
     end
 
-    if success and sign_params[:categories].present?
-      redirect_to signs_path, notice: t('helpers.was_updated', model: 'Skilt')
-    else
-      render action: 'edit'
-    end
+    success_or_redirect(success && sign_params[:categories].present?, t('helpers.was_updated', model: 'Skilt'), 'edit')
   end
 
   # DELETE /signs/1
@@ -68,6 +60,14 @@ class SignsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_sign
       @sign = Sign.find(params[:id])
+    end
+
+    def success_or_redirect(success, notice, action)
+      if success
+      redirect_to signs_path, notice: notice
+      else
+        render action: action
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
