@@ -19,8 +19,8 @@
           %td= user.email
           %td
             - if user.mails
-              %span.glyphicon.glyphicon-ok
+              = check_box_tag '', '', true, disabled: true
             - else
-              %span.glyphicon.glyphicon-remove
+              = check_box_tag '', '', false, disabled: true
           %td= link_to t('helpers.edit'), edit_user_path(user), class: 'btn btn-xs btn-primary'
           %td= link_to t('helpers.destroy'), user_path(user), method: :delete, data: { confirm: t('helpers.are_you_sure') }, class: 'btn btn-xs btn-danger'

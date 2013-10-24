@@ -46,9 +46,5 @@ ul.recycling-centers {
     float: left;
     display: inline;
     width: 50%;
-
-    @media (max-width: 768px) {
-      width: 100%;
-    }
   }
 }

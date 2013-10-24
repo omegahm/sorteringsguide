@@ -61,7 +61,7 @@
 - cache "v_home_#{@last_recycling_center_updated}" do
   %h1 Sorteringsguide
 
-  .col-xs-4
+  .col-xs-6
     %ul.recycling-centers
       - @recycling_centers.each do |rc|
         %li{id: rc.name.parameterize}= link_to rc.name.gsub(/genbrugsstation/i, ''), rc
@@ -73,5 +73,5 @@
         %p.intro
           Hvis du er i tvivl om, hvor på genbrugsstationen, du skal afleverer noget, kan du altid spørge pladspersonalet.
 
-  .col-xs-8
+  .col-xs-6
     #map-canvas
