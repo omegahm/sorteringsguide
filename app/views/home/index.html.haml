@@ -5,14 +5,14 @@
   - cache "vj_home_#{@last_recycling_center_updated}" do
     :javascript
       //<![CDATA[
+      var map, bounds, marker, myLatLng, mapOptions;
+
       $(document).ready(function() {
         function initialize() {
           google.maps.visualRefresh = true;
 
-          var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
-
-          var mapOptions = {
-            zoom: 10,
+          mapOptions = {
+            zoom: 9,
             disableDefaultUI: true,
             scaleControl: false,
             draggable: false,
@@ -22,13 +22,12 @@
             scrollwheel: false
           }
 
-          var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-          var bounds = new google.maps.LatLngBounds();
-          var marker;
+          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+          bounds = new google.maps.LatLngBounds();
 
           #{
             @recycling_centers.select {|rc| rc.lat.present? and rc.lng.present? }.map { |rc| "
-            var myLatLng = new google.maps.LatLng(#{rc.lat}, #{rc.lng});
+            myLatLng = new google.maps.LatLng(#{rc.lat}, #{rc.lng});
             bounds.extend(myLatLng);
 
             marker = new google.maps.Marker({
@@ -51,7 +50,7 @@
             " }.join("\n")
           }
 
-          map.fitBounds(bounds);
+          map.setCenter(bounds.getCenter());
         }
 
         google.maps.event.addDomListener(window, 'load', initialize);
