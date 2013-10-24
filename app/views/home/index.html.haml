@@ -61,10 +61,17 @@
 - cache "v_home_#{@last_recycling_center_updated}" do
   %h1 Sorteringsguide
 
-  .col-xs-3
+  .col-xs-4
     %ul.recycling-centers
       - @recycling_centers.each do |rc|
         %li{id: rc.name.parameterize}= link_to rc.name.gsub(/genbrugsstation/i, ''), rc
 
-  .col-xs-9
+    .panel.panel-default
+      .panel-body
+        %p.intro
+          Sorteringsguiden kan hjælpe dig med at finde ud af hvor på genbrugsstationen, du kommer af med forskelligt affald.
+        %p.intro
+          Hvis du er i tvivl om, hvor på genbrugsstationen, du skal afleverer noget, kan du altid spørge pladspersonalet.
+
+  .col-xs-8
     #map-canvas

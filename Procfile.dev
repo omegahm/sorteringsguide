@@ -1,2 +1,3 @@
 web: bundle exec puma -p 3000
 memcache: memcached -p 11211
+db: postgres -D ../postgresql

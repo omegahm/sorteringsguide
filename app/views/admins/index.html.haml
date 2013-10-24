@@ -19,8 +19,8 @@
           %td= user.email
           %td
             - if user.mails
-              %i.glyphicon.glyphicon-ok
+              %span.glyphicon.glyphicon-ok
             - else
-              %i.glyphicon.glyphicon-remove
+              %span.glyphicon.glyphicon-remove
           %td= link_to t('helpers.edit'), edit_user_path(user), class: 'btn btn-xs btn-primary'
           %td= link_to t('helpers.destroy'), user_path(user), method: :delete, data: { confirm: t('helpers.are_you_sure') }, class: 'btn btn-xs btn-danger'
