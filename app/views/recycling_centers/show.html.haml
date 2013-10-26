@@ -2,7 +2,7 @@
   %h2= @recycling_center.name
 
   %p
-    %input#search-faction.input-lg.form-control(placeholder="Indtast søgeord..." data-bind="event: { keyup: search }")
+    %input#search-faction.input-lg.form-control(placeholder="Indtast søgeord..." data-bind="value: query, valueUpdate: 'keyup'")
 
   %table.table.table-bordered.table-hover.table-striped(data-bind="visible: searchedSigns().length > 0")
     %thead
@@ -32,31 +32,35 @@
       function AppViewModel() {
         var self = this;
 
-        self.search = function() {
-          var value = $('input#search-faction').val();
-          self.searchedSigns([]);
+        self.query = ko.observable('');
 
+        self.search = function(value) {
           function add(elem, re, search_string) {
             if (self.searchedSigns.indexOf(elem) === -1 && search_string.match(re)) {
               self.searchedSigns.push(elem);
             }
           }
 
-          if (value != "") {
-            var re = new RegExp("^" + value, 'gi');
-            $.each(self.signs(), function(index, elem) {
-              add(elem, re, elem.name);
-            });
+          self.searchedSigns([]);
 
-            re = new RegExp(value, 'gi');
-            $.each(self.signs(), function(index, elem) {
-              add(elem, re, elem.name);
-            });
+          var re = new RegExp("^" + value, 'gi');
+          $.each(self.signs(), function(index, elem) {
+            add(elem, re, elem.name);
+          });
 
-            $.each(self.signs(), function(index, elem) {
-              add(elem, re, elem.search_terms);
-            });
-          }
+          re = new RegExp("(^|, )" + value, 'gi');
+          $.each(self.signs(), function(index, elem) {
+            add(elem, re, elem.search_terms);
+          });
+
+          re = new RegExp(value, 'gi');
+          $.each(self.signs(), function(index, elem) {
+            add(elem, re, elem.name);
+          });
+
+          $.each(self.signs(), function(index, elem) {
+            add(elem, re, elem.search_terms);
+          });
         }
 
         self.signs = ko.observableArray([
@@ -68,5 +72,8 @@
         self.searchedSigns = ko.observableArray();
       }
 
-      ko.applyBindings(new AppViewModel());
+      var viewModel = new AppViewModel();
+      viewModel.query.subscribe(viewModel.search)
+
+      ko.applyBindings(viewModel);
       //]]>
