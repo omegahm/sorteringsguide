@@ -2,7 +2,7 @@
   %h2= @recycling_center.name
 
   %p
-    %input#search-faction.input-lg.form-control(placeholder="Indtast søgeord..." data-bind="value: query, valueUpdate: 'keyup'")
+    %input#search-faction.input-lg.form-control(placeholder="Indtast søgeord..." data-bind="value: query, valueUpdate: 'keyup', event: { click: checkPlaceholder, blur: checkPlaceholder }")
 
   %table.table.table-bordered.table-hover.table-striped(data-bind="visible: searchedSigns().length > 0")
     %thead
@@ -32,9 +32,27 @@
       function AppViewModel() {
         var self = this;
 
-        self.query = ko.observable('');
+        self.query = ko.observable('Indtast søgeord...');
+
+        self.checkPlaceholder = function(data, event) {
+          if (event.type == 'click') {
+            if (self.query() == "Indtast søgeord...") {
+              self.query('');
+            }
+          }
+
+          if (event.type == 'blur') {
+            if (self.query() == "") {
+              self.query('Indtast søgeord...');
+            }
+          }
+        }
 
         self.search = function(value) {
+          if (value == '') {
+            return;
+          }
+
           function add(elem, re, search_string) {
             if (self.searchedSigns.indexOf(elem) === -1 && search_string.match(re)) {
               self.searchedSigns.push(elem);
