@@ -49,6 +49,8 @@
         }
 
         self.search = function(value) {
+          self.searchedSigns([]);
+
           if (value == '') {
             return;
           }
@@ -58,8 +60,6 @@
               self.searchedSigns.push(elem);
             }
           }
-
-          self.searchedSigns([]);
 
           var re = new RegExp("^" + value, 'gi');
           $.each(self.signs(), function(index, elem) {
