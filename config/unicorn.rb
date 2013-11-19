@@ -1,5 +1,5 @@
-worker_processes Integer(ENV["UNICORN_WORKERS"] || 3)
-timeout 29
+worker_processes Integer(ENV["UNICORN_WORKERS"] || 3) # amount of unicorn workers to spin up
+timeout 29                                            # restarts workers that hang for 29 seconds
 preload_app true
 
 before_fork do |server, worker|

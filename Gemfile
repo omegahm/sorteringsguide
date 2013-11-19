@@ -3,10 +3,11 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 gem 'rails'
+gem 'pg'
 
 gem 'actionpack-action_caching'
 gem 'asset_sync'
-gem 'bootstrap-sass', github: 'thomas-mcdonald/bootstrap-sass'
+gem 'bootstrap-sass'
 gem 'coffee-rails'
 gem 'dalli'
 gem 'devise'
@@ -19,17 +20,15 @@ gem 'knockoutjs-rails'
 gem 'memcachier'
 gem 'newrelic_rpm'
 gem 'paperclip'
-gem 'pg'
-gem 'puma'
 gem 'rack-timeout'
 gem 'rails-i18n', '~> 4.0.0.pre'
 gem 'sass-rails'
 gem 'uglifier'
-gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
+gem 'unf'
+gem 'unicorn-rails'
 gem 'yui-compressor'
 
 group :production do
-  gem 'justonedb'
   gem 'rails_12factor' # required by Heroku
 end
 
