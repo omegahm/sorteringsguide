@@ -31,7 +31,7 @@ Sorteringsguide::Application.configure do
 
   # Needs to be false on Heroku
   config.serve_static_assets = false
-  config.static_cache_control = "public, max-age=31536000"
+  config.static_cache_control = 'public, max-age=31536000'
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
@@ -107,8 +107,8 @@ Sorteringsguide::Application.configure do
 end
 
 Sorteringsguide::Application.config.middleware.use ExceptionNotification::Rack,
-  email: {
-    email_prefix:         "[Sorteringsguide] ",
-    sender_address:       %{"Notifer" <notifier@sorteringsguide.dk>},
-    exception_recipients: ENV['EXCEPTION_LIST']
-  }
+                                                   email: {
+                                                     email_prefix:         '[Sorteringsguide] ',
+                                                     sender_address:       '"Notifer" <notifier@sorteringsguide.dk>',
+                                                     exception_recipients: ENV['EXCEPTION_LIST']
+                                                   }

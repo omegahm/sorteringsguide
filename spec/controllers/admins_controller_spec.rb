@@ -22,8 +22,8 @@ describe AdminsController do
 
       it 'assigns admins and last updated' do
         get :index
-        assigns(:admins).should == [@admin]
-        assigns(:last_admin_updated).should == @admin.updated_at.to_i
+        assigns(:admins).should eq([@admin])
+        assigns(:last_admin_updated).should eq(@admin.updated_at.to_i)
       end
     end
 
@@ -36,7 +36,7 @@ describe AdminsController do
 
       context 'with password blank' do
         it 'doesnt change password' do
-          new_email = "some@email2.com"
+          new_email = 'some@email2.com'
           password = @admin.password
 
           patch :update, id: @admin.id, admin: { email: new_email }
@@ -45,8 +45,8 @@ describe AdminsController do
           response.should redirect_to(users_path)
 
           @admin.reload
-          @admin.email.should == new_email
-          @admin.password.should == password
+          @admin.email.should eq(new_email)
+          @admin.password.should eq(password)
         end
       end
 
@@ -70,7 +70,7 @@ describe AdminsController do
       context 'valid params' do
         it 'should create new admin' do
           post :create, admin: { email: 'some@email.com', password: 'secret', password_confirmation: 'secret' }
-          Admin.count.should == 2 # The one logged in and this new one
+          Admin.count.should eq(2) # The one logged in and this new one
         end
       end
 

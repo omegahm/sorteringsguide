@@ -27,19 +27,19 @@ describe SignsController do
       it 'assigns' do
         get :index
 
-        assigns(:signs).should == [@sign]
-        assigns(:last_sign_updated).should == @sign.updated_at.to_i
+        assigns(:signs).should eq([@sign])
+        assigns(:last_sign_updated).should eq(@sign.updated_at.to_i)
       end
 
       context 'with only' do
         it 'gets some' do
           get :index, only: @sign.category
-          assigns(:signs).should == [@sign]
+          assigns(:signs).should eq([@sign])
         end
 
         it 'gets none' do
           get :index, only: 'Blob'
-          assigns(:signs).should == []
+          assigns(:signs).should be_empty
         end
       end
     end
@@ -56,13 +56,13 @@ describe SignsController do
         it 'creates' do
           sign = FactoryGirl.build(:sign)
           post :create, sign: sign.attributes.except(:category).merge(categories: ['Blå'])
-          Sign.count.should == 1
+          Sign.count.should eq(1)
         end
 
         it 'creates more than one' do
           sign = FactoryGirl.build(:sign)
           post :create, sign: sign.attributes.except(:category).merge(categories: ['Blå', 'Grå'])
-          Sign.count.should == 2
+          Sign.count.should eq(2)
         end
       end
 
@@ -83,21 +83,21 @@ describe SignsController do
 
         it 'updates' do
           patch :update, id: @sign1.id, sign: { name: 'Nyt skilt' }
-          @sign1.reload.name.should == 'Nyt skilt'
-          @sign2.reload.name.should_not == 'Nyt skilt'
+          @sign1.reload.name.should eq('Nyt skilt')
+          @sign2.reload.name.should_not eq('Nyt skilt')
         end
 
         it 'updates more than one' do
-          @sign1.name.should == @sign2.name
+          @sign1.name.should eq(@sign2.name)
           patch :update, id: @sign1.id, sign: { name: 'Nyt skilt', categories: [@sign1.category, @sign2.category] }
-          @sign1.reload.name.should == 'Nyt skilt'
-          @sign2.reload.name.should == 'Nyt skilt'
+          @sign1.reload.name.should eq('Nyt skilt')
+          @sign2.reload.name.should eq('Nyt skilt')
         end
 
         it 'updates and creates' do
           patch :update, id: @sign1.id, sign: { name: 'Nyt skilt', categories: [@sign1.category, 'Farvede'] }
-          Sign.count.should == 3
-          @sign2.reload.name.should_not == 'Nyt skilt'
+          Sign.count.should eq(3)
+          @sign2.reload.name.should_not eq('Nyt skilt')
         end
       end
 

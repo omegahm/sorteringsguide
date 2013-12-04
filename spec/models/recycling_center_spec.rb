@@ -16,8 +16,8 @@ describe RecyclingCenter do
       rc.address = 'Glostrup genbrugsplads, 2600 Glostrup'
       rc.save
 
-      rc.lat.should_not == lat
-      rc.lng.should_not == lng
+      rc.lat.should_not eq(lat)
+      rc.lng.should_not eq(lng)
     end
   end
 end
@@ -36,4 +36,3 @@ end
 #  created_at :datetime
 #  updated_at :datetime
 #
-

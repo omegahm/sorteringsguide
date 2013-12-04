@@ -13,8 +13,8 @@ describe HomeController do
 
     it 'assigns' do
       get :index
-      assigns(:last_recycling_center_updated).should == @rc.updated_at.to_i
-      assigns(:recycling_centers).should == [@rc]
+      assigns(:last_recycling_center_updated).should eq(@rc.updated_at.to_i)
+      assigns(:recycling_centers).should eq([@rc])
     end
   end
 

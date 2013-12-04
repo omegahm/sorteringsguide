@@ -43,6 +43,7 @@ group :development do
   gem 'mailcatcher'
   gem 'pry'
   gem 'quiet_assets'
+  gem 'rubocop'
 end
 
 group :test do

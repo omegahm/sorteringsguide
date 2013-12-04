@@ -1,10 +1,10 @@
 class Sign < ActiveRecord::Base
-  SIGN_CATEGORIES = ["Blå", "Grå", "Farvede"]
+  SIGN_CATEGORIES = ['Blå', 'Grå', 'Farvede']
 
   has_attached_file :image,
                     styles: {
-                      medium: "300x300>",
-                      thumb: "100x100>"
+                      medium: '300x300>',
+                      thumb: '100x100>'
                     },
                     default_url: 'signs/:style/missing.png'
 
@@ -31,4 +31,3 @@ end
 #  image_file_size    :integer
 #  image_updated_at   :datetime
 #
-

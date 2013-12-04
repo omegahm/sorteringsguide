@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe Sign do
-  context "scopes" do
-    describe ":for_factions" do
+  context 'scopes' do
+    describe ':for_factions' do
       it 'gets correct factions' do
         @valid_sign = FactoryGirl.create(:sign)
         @invalid_sign1 = FactoryGirl.create(:sign)
@@ -31,4 +31,3 @@ end
 #  image_file_size    :integer
 #  image_updated_at   :datetime
 #
-

@@ -2,15 +2,15 @@ require 'factory_girl'
 
 FactoryGirl.define do
   factory :admin do |admin|
-    admin.sequence(:email) {|n| "mr#{n}@example.com"}
+    admin.sequence(:email) { |n| "mr#{n}@example.com" }
     admin.password 'secret'
     admin.password_confirmation 'secret'
     admin.mails true
   end
 
   factory :sign do |sign|
-    sign.sequence(:name) {|n| "asfalt#{n}" }
-    sign.sequence(:faction_number) {|n| n }
+    sign.sequence(:name) { |n| "asfalt#{n}" }
+    sign.sequence(:faction_number) { |n| n }
     sign.comment 'this is a comment'
     sign.category Sign::SIGN_CATEGORIES.first
     sign.search_terms 'asfalt jord møg'

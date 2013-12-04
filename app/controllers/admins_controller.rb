@@ -32,9 +32,9 @@ class AdminsController < ApplicationController
   # PATCH/PUT /users/1
   def update
     aparams = admin_params.to_hash
-    if !aparams["password"].present? or aparams["password"].blank?
-      aparams.delete("password")
-      aparams.delete("password_confirmation")
+    if !aparams['password'].present? or aparams['password'].blank?
+      aparams.delete('password')
+      aparams.delete('password_confirmation')
     end
 
     if @admin.update_attributes(aparams)

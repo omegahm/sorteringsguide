@@ -33,4 +33,3 @@ end
 #  updated_at             :datetime
 #  mails                  :boolean          default(FALSE)
 #
-

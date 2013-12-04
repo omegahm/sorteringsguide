@@ -5,7 +5,7 @@ class SignsController < ApplicationController
 
   # GET /signs
   def index
-    @signs = Sign.order("UPPER(name)")
+    @signs = Sign.order('UPPER(name)')
 
     if params[:only]
       @signs = @signs.where(category: params[:only])
@@ -84,7 +84,7 @@ class SignsController < ApplicationController
       signs = Sign.where(category: category, name: name_was)
 
       if signs.present?
-        signs.all? {|sign| sign.update_attributes(att) }
+        signs.all? { |sign| sign.update_attributes(att) }
       else
         sign = Sign.new(att)
         sign.save

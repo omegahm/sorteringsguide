@@ -23,9 +23,9 @@ describe RecyclingCentersController do
         get :show, id: rc.id
 
         assigns(:factions).should be_present
-        assigns(:factions).should == rc.factions
+        assigns(:factions).should eq(rc.factions)
         assigns(:last_sign_updated).should be_present
-        assigns(:last_sign_updated).should == rc.updated_at.to_i
+        assigns(:last_sign_updated).should eq(rc.updated_at.to_i)
         assigns(:signs).should be_present
       end
     end
@@ -50,8 +50,8 @@ describe RecyclingCentersController do
       it 'assigns' do
         get :index
 
-        assigns(:last_recycling_center_updated).should == @rc.updated_at.to_i
-        assigns(:recycling_centers).should == [@rc]
+        assigns(:last_recycling_center_updated).should eq(@rc.updated_at.to_i)
+        assigns(:recycling_centers).should eq([@rc])
       end
     end
 
