@@ -6,7 +6,7 @@ class RecyclingCenter < ActiveRecord::Base
   validates_presence_of :name, :address, :category, :lat, :lng
 
   def encode_location
-    location = Geokit::Geocoders::GoogleGeocoder3.geocode("#{address}, Denmark")
+    location = Geokit::Geocoders::GoogleGeocoder.geocode("#{address}, Denmark")
     self.lat = location.lat
     self.lng = location.lng
   end

@@ -47,6 +47,6 @@ RSpec.configure do |config|
     location.stub(lng: 10.3506822)
     location.stub(lat: 55.3620392)
     location.stub(success: true)
-    Geokit::Geocoders::GoogleGeocoder3.stub(geocode: location)
+    Geokit::Geocoders::GoogleGeocoder.stub(geocode: location)
   end
 end

@@ -9,7 +9,7 @@ Geokit::Geocoders.request_timeout = 3
 # This is your Google Maps geocoder key.
 # See http://www.google.com/apis/maps/signup.html
 # and http://www.google.com/apis/maps/documentation/#Geocoding_Examples
-Geokit::Geocoders.google = 'AIzaSyBQKY8QnPS7MsXhNhjR7INtqCmFJlxjevg'
+Geokit::Geocoders::GoogleGeocoder.cryptographic_key = 'AIzaSyCqm-OU0oKMyuM0yTCSa8aogHY_3qhzrKg'
 
 # This is the order in which the geocoders are called in a failover scenario
 # If you only want to use a single geocoder, put a single symbol in the array.
