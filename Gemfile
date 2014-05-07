@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
-ruby '2.1.0'
+ruby '2.1.1'
 
-gem 'rails'
+gem 'rails', '~> 4.0.5'
 gem 'pg'
 
 gem 'actionpack-action_caching'
