@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-ruby '2.1.1'
-
 gem 'rails', '~> 4.0.5'
 gem 'pg'
 
@@ -51,7 +49,7 @@ group :test do
   gem 'capybara-webkit'
   gem 'factory_girl_rails'
   gem 'fuubar'
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 2.99'
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
 end
